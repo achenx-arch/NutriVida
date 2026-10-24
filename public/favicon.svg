@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="NutriVida">
+  <!-- Favicon NutriVida: misma marca que .brand-mark (verde #2e7d32, esquina inferior izquierda en punta de hoja, "N" blanca). -->
+  <path fill="#2e7d32" d="M32 0h0a32 32 0 0 1 32 32v0a32 32 0 0 1-32 32H8a8 8 0 0 1-8-8V32A32 32 0 0 1 32 0z"/>
+  <path fill="#fff" d="M20 46V18h6.2L38 35.6V18h6v28h-6.2L26 28.4V46z"/>
+</svg>

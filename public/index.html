@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NutriVida · Bienestar a tu manera</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">N</span> NutriVida <span id="brandContext">Bienestar a tu manera</span></div>
+  <div id="userBox" class="user-box hidden">
+    <span id="userName"></span>
+    <button id="logoutBtn" class="btn-ghost">Cerrar sesión</button>
+  </div>
+</header>
+
+<nav id="appNav" class="role-nav hidden" aria-label="Navegación principal"></nav>
+<main class="container">
+
+  <!-- ===== Vista: Autenticación ===== -->
+  <section id="viewAuth" class="card">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">Iniciar sesión</button>
+      <button class="tab-btn" data-tab="register">Registrarme</button>
+    </div>
+
+    <form id="loginForm" class="tab-panel active">
+      <label>Correo electrónico</label>
+      <input type="email" id="loginCorreo" required placeholder="tucorreo@ejemplo.com" />
+      <label>Contraseña</label>
+      <input type="password" id="loginPassword" required placeholder="••••••••" />
+      <button type="submit" class="btn-primary">Entrar</button>
+      <p class="hint">Tu espacio para explorar, conocer y elegir mejor.</p>
+    </form>
+
+    <form id="registerForm" class="tab-panel">
+      <label>Nombre completo</label>
+      <input type="text" id="regNombre" required />
+      <label>Correo electrónico</label>
+      <input type="email" id="regCorreo" required />
+      <label>Contraseña (mínimo 8 caracteres)</label>
+      <input type="password" id="regPassword" required minlength="8" />
+      <button type="submit" class="btn-primary">Crear cuenta</button>
+    </form>
+
+    <p id="authError" class="error hidden"></p>
+  </section>
+
+  <!-- ===== Vista: Cliente ===== -->
+  <section id="viewCliente" class="hidden">
+    <div class="grid">
+
+      <div id="perfilPanel" class="card">
+        <h2>Tu perfil NutriVida</h2>
+        <p class="muted">Tus declaraciones se guardan cifradas. Guardarlas no concede autorización para enviarlas a la IA.</p>
+        <form id="perfilForm">
+          <label>Condiciones médicas</label>
+          <textarea id="perfilCondiciones" rows="2" placeholder="Ej. diabetes tipo 2, hipertensión..."></textarea>
+          <label>Alergias</label>
+          <textarea id="perfilAlergias" rows="2" placeholder="Ej. gluten, lactosa..."></textarea>
+          <label>Objetivo nutricional</label>
+          <input type="text" id="perfilObjetivo" placeholder="Ej. bajar de peso, más energía..." />
+          <button type="submit" class="btn-secondary">Guardar perfil</button>
+        </form>
+        <p id="perfilMsg" class="msg hidden"></p>
+        <fieldset id="consentimientosIA" class="consentimientos">
+          <legend>Personalización de NutriVida AI</legend>
+          <label class="consentimiento" for="consentPerfil">
+            <input type="checkbox" id="consentPerfil" disabled />
+            <span><strong>Personalización con mi perfil</strong>
+            Autorizo a NutriVida AI a utilizar mis preferencias y objetivos alimentarios permitidos para personalizar recomendaciones. Mis condiciones médicas no se enviarán a la inteligencia artificial.</span>
+          </label>
+          <label class="consentimiento" for="consentHistorial">
+            <input type="checkbox" id="consentHistorial" disabled />
+            <span><strong>Personalización con mis compras anteriores</strong>
+            Autorizo a NutriVida AI a utilizar un resumen limitado de mis pedidos entregados para mejorar las recomendaciones de productos.</span>
+          </label>
+          <p id="consentHistorialDetalle" class="muted">Si lo autorizas, solo se consideran tus pedidos <strong>entregados</strong> de los últimos 90 días (hasta 20): qué productos y categorías se repiten, sin precios, direcciones ni datos de pago, y sin enviarlos a la inteligencia artificial. Sirve únicamente para ordenar las opciones relevantes a tu consulta: no reemplaza tus restricciones alimentarias ni garantiza que un producto sea seguro frente a alergias. Puedes retirar el permiso cuando quieras; tus pedidos no se eliminan.</p>
+          <p class="muted">Puedes retirar cualquiera de estas autorizaciones cuando quieras. Esto no eliminará tu perfil ni tus pedidos.</p>
+          <p id="consentMsg" class="msg hidden" role="status" aria-live="polite"></p>
+          <button type="button" id="consentReintentar" class="btn-secondary hidden">Reintentar</button>
+        </fieldset>
+        <!-- FASE 9B-2: datos alimentarios estructurados (opciones del catálogo del servidor; sin datos simulados). -->
+        <fieldset id="alimentacionIA" class="consentimientos alimentacion">
+          <legend>Mi alimentación</legend>
+          <p id="alimentacionEstado" class="aviso-alimentacion hidden" role="status"></p>
+          <p class="muted">Las alergias que escribas en el campo «Alergias» de arriba se guardan como texto y no se aplican automáticamente. Para que una alergia se use al filtrar recomendaciones, selecciónala en «Alérgenos declarados».</p>
+          <div class="grupo-alimentacion">
+            <h3>Preferencias alimentarias</h3>
+            <p class="muted">Solo ayudan a ordenar las recomendaciones; no excluyen productos.</p>
+            <div id="alimPreferencias" class="opciones-alimentacion"></div>
+          </div>
+          <div class="grupo-alimentacion">
+            <h3>Restricciones dietéticas</h3>
+            <p class="muted">Excluimos los productos que declaran un ingrediente incompatible y los que no podemos comprobar. No es una certificación.</p>
+            <div id="alimRestricciones" class="opciones-alimentacion"></div>
+          </div>
+          <div class="grupo-alimentacion">
+            <h3>Alérgenos declarados</h3>
+            <p class="muted">NutriVida evalúa los ingredientes declarados, pero no puede certificar la ausencia de alérgenos ni de trazas: revisa siempre la etiqueta.</p>
+            <div id="alimAlergenos" class="opciones-alimentacion"></div>
+          </div>
+          <button type="button" id="alimentacionGuardar" class="btn-secondary" disabled>Guardar mi alimentación</button>
+          <button type="button" id="alimentacionReintentar" class="btn-secondary hidden">Reintentar</button>
+          <p id="alimentacionMsg" class="msg hidden" role="status" aria-live="polite"></p>
+        </fieldset>
+      </div>
+
+      <div id="iaPanel" class="card">
+        <h2>NutriVida AI</h2>
+        <form id="consultaForm">
+          <textarea id="consultaTexto" rows="3" maxlength="500"
+            placeholder="Ej. ¿qué producto me recomiendas si quiero bajar de peso y soy alérgico al gluten?"></textarea>
+          <div class="row-between">
+            <span id="contador" class="muted">0 / 500</span>
+            <button type="submit" class="btn-primary" id="consultaBtn">Enviar consulta</button>
+          </div>
+        </form>
+        <div id="respuestaBox" class="respuesta hidden"></div>
+        <div id="recomendacionesIA" class="ia-cards hidden" aria-live="polite" aria-label="Productos recomendados"></div>
+      </div>
+
+    </div>
+
+    <div id="historialPanel" class="card">
+      <h2>Tu historial de consultas</h2>
+      <div id="historialList" class="lista"></div>
+    </div>
+  </section>
+
+  <!-- ===== Vista: Administrador ===== -->
+  <section id="viewAdmin" class="hidden">
+    <div class="grid">
+      <div class="card">
+        <h2>Catálogo anterior</h2>
+        <form id="productoForm">
+          <input type="text" id="prodNombre" placeholder="Nombre del producto" required />
+          <input type="text" id="prodCategoria" placeholder="Categoría" />
+          <textarea id="prodIngredientes" rows="2" placeholder="Ingredientes"></textarea>
+          <textarea id="prodValores" rows="2" placeholder="Valores nutricionales"></textarea>
+          <button type="submit" class="btn-secondary" id="productoGuardarBtn">Agregar producto</button>
+          <button type="button" class="btn-ghost-admin hidden" id="productoCancelarBtn">Cancelar edición</button>
+        </form>
+        <p id="productoMsg" class="msg hidden" role="status"></p>
+        <div id="productosList" class="lista"></div>
+      </div>
+
+      <div id="revisionConsultasCard" class="card">
+        <h2>Consultas de clientes</h2>
+        <div id="consultasAdminList" class="lista"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="homePanel" class="hidden">
+    <div class="hero"><div><p class="eyebrow">TU ESPACIO NUTRIVIDA</p><h1>Pequeñas elecciones.<br>Bienestar cada día.</h1><p>Explora nuestros productos, conoce sus ingredientes y encuentra opciones para tu rutina.</p><button id="explorarBtn" class="btn-primary">Explorar el catálogo <span aria-hidden="true">→</span></button></div><div class="hero-art" aria-hidden="true"><span>HOY ES UN BUEN DÍA<br>PARA CUIDARTE</span><div class="leaf leaf-one"></div><div class="leaf leaf-two"></div><div class="leaf leaf-three"></div></div></div>
+    <div class="benefits"><article><span>01</span><h2>Conoce lo que eliges</h2><p>Consulta precios e ingredientes declarados en cada ficha.</p></article><article><span>02</span><h2>Encuentra tu opción</h2><p>Busca por nombre, categoría o ingrediente.</p></article><article><span>03</span><h2>Todo en tu espacio</h2><p>Tu perfil y tus consultas, disponibles solo para ti.</p></article></div>
+  </section>
+  <section id="catalogPanel" class="hidden" aria-labelledby="catalogHeading">
+    <div class="section-heading"><div><p class="eyebrow">EXPLORA NUTRIVIDA</p><h1 id="catalogHeading">Nuestro catálogo</h1><p>Ingredientes claros. Opciones para tu día a día.</p></div><span class="phase-note">Consulta de productos · sin compra en línea</span></div>
+    <form id="catalogFilters" class="filter-bar"><div class="search-field"><label for="catalogNombre">Buscar producto</label><input id="catalogNombre" maxlength="120" type="search" placeholder="¿Qué estás buscando?"></div><div><label for="catalogCategoria">Categoría</label><select id="catalogCategoria"><option value="">Todas las categorías</option></select></div><div><label for="catalogIngrediente">Ingrediente</label><select id="catalogIngrediente"><option value="">Todos los ingredientes</option></select></div><button class="btn-primary" type="submit">Buscar</button><button id="catalogLimpiar" class="btn-ghost-admin" type="button">Limpiar</button></form>
+    <p id="catalogMsg" role="status" aria-live="polite"></p><div id="catalogCards" class="product-grid"></div><div class="pagination"><button type="button" id="catalogPrev" class="btn-ghost-admin">← Anterior</button><span id="catalogPage"></span><button type="button" id="catalogNext" class="btn-ghost-admin">Siguiente →</button></div>
+  </section>
+  <section id="categoriesPanel" class="hidden"><div class="section-heading"><div><p class="eyebrow">ADMINISTRACIÓN</p><h1>Categorías</h1><p>Organiza las opciones de NutriVida.</p></div></div><div class="admin-grid"><form id="categoriaForm" class="card"><h2 id="categoriaFormTitle">Nueva categoría</h2><input id="categoriaId" type="hidden"><label for="categoriaNombre">Nombre</label><input id="categoriaNombre" required minlength="2" maxlength="80"><label for="categoriaDescripcion">Descripción</label><textarea id="categoriaDescripcion" maxlength="250" rows="3"></textarea><label class="check-label"><input id="categoriaEstado" type="checkbox" checked> Categoría activa</label><button class="btn-primary">Guardar categoría</button><button id="categoriaCancelar" type="button" class="btn-ghost-admin">Cancelar</button><p id="categoriaMsg" role="status" aria-live="polite"></p></form><div class="card"><h2>Categorías registradas</h2><div id="categoriasList" class="admin-list"></div></div></div></section>
+  <section id="ingredientsPanel" class="hidden"><div class="section-heading"><div><p class="eyebrow">ADMINISTRACIÓN</p><h1>Ingredientes</h1><p>Un registro por ingrediente. Relaciones claras con cada producto.</p></div></div><div class="admin-grid"><form id="ingredienteForm" class="card"><h2 id="ingredienteFormTitle">Nuevo ingrediente</h2><input id="ingredienteId" type="hidden"><label for="ingredienteNombre">Nombre</label><input id="ingredienteNombre" required minlength="2" maxlength="100"><label for="ingredienteDescripcion">Descripción</label><textarea id="ingredienteDescripcion" maxlength="250" rows="3"></textarea><button class="btn-primary">Guardar ingrediente</button><button id="ingredienteCancelar" type="button" class="btn-ghost-admin">Cancelar</button><p id="ingredienteMsg" role="status" aria-live="polite"></p></form><div class="card"><h2>Ingredientes registrados</h2><div id="ingredientesList" class="admin-list"></div></div></div></section>
+  <section id="productsPanel" class="hidden"><div class="section-heading"><div><p class="eyebrow">ADMINISTRACIÓN</p><h1>Productos</h1><p>Completa cada ficha y decide cuándo publicarla.</p></div></div><div class="admin-grid product-admin"><form id="comercialForm" class="card"><h2 id="comercialTitle">Nuevo producto</h2><input id="comercialId" type="hidden"><label for="comercialNombre">Nombre</label><input id="comercialNombre" required minlength="2" maxlength="120"><label for="comercialCategoria">Categoría</label><select id="comercialCategoria" required></select><label for="comercialDescripcion">Descripción</label><textarea id="comercialDescripcion" maxlength="5000" rows="3"></textarea><div class="field-pair"><div><label for="comercialPrecio">Precio (Q)</label><input id="comercialPrecio" inputmode="decimal" type="number" min="0.01" max="99999999.99" step="0.01" placeholder="Sin asignar"></div><div><label for="comercialStockMinimo">Stock mínimo de referencia</label><input id="comercialStockMinimo" type="number" min="0" max="2147483647" step="1" placeholder="Sin definir"></div></div><label for="comercialImagen">Imagen del producto</label><div class="image-picker"><select id="comercialImagen"><option value="">Sin imagen</option></select><img id="comercialImagenPreview" class="image-preview" src="/images/producto.svg" alt="Vista previa de la imagen seleccionada" width="120" height="90"></div><p class="muted">Solo imágenes locales de /images/productos/ (WebP, PNG o JPG).</p><label for="comercialValores">Información nutricional declarada</label><textarea id="comercialValores" maxlength="2000" rows="2"></textarea><fieldset><legend>Ingredientes</legend><p class="muted">Selecciona registros existentes. Las cantidades son opcionales.</p><div id="comercialIngredientes" class="ingredient-picker"></div></fieldset><label class="check-label"><input id="comercialEstado" type="checkbox"> Publicar como producto activo</label><p class="muted">Requiere categoría activa y precio mayor que cero. No se asignan existencias.</p><details id="legadoPanel" class="hidden"><summary>Información histórica para completar la ficha</summary><p id="legadoTexto"></p></details><button class="btn-primary">Guardar producto</button><button id="comercialCancelar" type="button" class="btn-ghost-admin">Cancelar</button><p id="comercialMsg" role="status" aria-live="polite"></p></form><div><form id="adminProductFilters" class="card filter-bar"><div><label for="adminProductNombre">Buscar</label><input id="adminProductNombre" type="search" maxlength="120"></div><div><label for="adminProductEstado">Estado</label><select id="adminProductEstado"><option value="todos">Todos</option><option value="activo">Activos</option><option value="inactivo">Inactivos</option></select></div><button class="btn-primary">Filtrar</button></form><p id="adminProductsMsg" role="status"></p><div id="adminProductsList" class="admin-list"></div><div class="pagination"><button id="adminPrev" class="btn-ghost-admin">← Anterior</button><span id="adminPage"></span><button id="adminNext" class="btn-ghost-admin">Siguiente →</button></div></div></div></section>
+  <dialog id="productDetail" aria-labelledby="detailTitle"><button id="detailClose" class="dialog-close" aria-label="Cerrar detalle">×</button><div id="detailContent"></div></dialog>
+
+<section id="inventoryPanel" class="hidden" aria-labelledby="invHeading">
+ <div class="section-heading"><div><p class="eyebrow">EXISTENCIAS REALES</p><h1 id="invHeading">Inventario</h1><p>Registra entradas, salidas y conteos físicos con su motivo.</p></div></div>
+ <form id="invFilters" class="card filter-bar"><div><label for="invNombre">Buscar producto</label><input id="invNombre" type="search" maxlength="120"></div><button class="btn-primary">Buscar</button></form>
+ <p id="invMsg" role="status" aria-live="polite"></p><div class="inventory-table-wrap"><table id="invTabla" class="inventory-table" aria-label="Existencias por producto"></table></div>
+ <div class="pagination"><button id="invPrev" class="btn-ghost-admin">← Anterior</button><span id="invPage"></span><button id="invNext" class="btn-ghost-admin">Siguiente →</button></div>
+ <h2>Historial de movimientos</h2><p class="muted">Filtra por producto desde su fila o por responsable pulsando su nombre en el historial.</p>
+ <p>Producto: <strong id="histProducto">Todos</strong> · Responsable: <strong id="histResponsable">Todos</strong></p>
+ <form id="histInvFilters" class="card filter-bar"><div><label for="histTipo">Tipo</label><select id="histTipo"><option value="">Todos</option><option>ENTRADA</option><option>SALIDA</option><option>AJUSTE</option></select></div><div><label for="histDesde">Desde (Guatemala)</label><input id="histDesde" type="date"></div><div><label for="histHasta">Hasta (inclusive)</label><input id="histHasta" type="date"></div><button class="btn-primary">Filtrar</button><button id="histLimpiar" type="button" class="btn-ghost-admin">Limpiar filtros</button></form>
+ <p id="histInvMsg" role="status" aria-live="polite"></p><div class="inventory-table-wrap"><table id="histInvTabla" class="inventory-table" aria-label="Historial de movimientos"></table></div>
+ <div class="pagination"><button id="histInvPrev" class="btn-ghost-admin">← Anterior</button><span id="histInvPage"></span><button id="histInvNext" class="btn-ghost-admin">Siguiente →</button></div>
+</section>
+<dialog id="movDialog" aria-labelledby="movTitle"><button id="movCerrar" type="button" class="dialog-close" aria-label="Cerrar movimiento">×</button><form id="movForm"><h2 id="movTitle">Registrar movimiento</h2><p id="movProducto"></p><p>Existencia actual: <strong id="movActual"></strong></p><label for="movTipo">Tipo de movimiento</label><select id="movTipo" required></select><label for="movCantidad" id="movCantidadLabel">Cantidad</label><input id="movCantidad" type="number" min="0" max="2147483647" step="1" required><p id="movAyuda" class="muted"></p><label for="movMotivo">Motivo obligatorio</label><textarea id="movMotivo" maxlength="250" required rows="3"></textarea><button id="movGuardar" class="btn-primary">Registrar movimiento</button><p id="movMsg" role="status" aria-live="polite"></p></form></dialog>
+<section id="consumptionPanel" class="hidden"><h1>Mi consumo</h1><p>Solo pedidos ENTREGADOS. La última fecha corresponde a la creación del pedido, no a la entrega.</p><p id="consumoResumen"></p><form id="consumoFilters" class="filter-bar"><label for="consumoBusqueda">Producto</label><input id="consumoBusqueda" type="search" maxlength="120"><button class="btn-primary">Buscar</button></form><p id="consumoMsg" role="status" aria-live="polite"></p><div id="consumoList"></div><div class="pagination"><button id="consumoPrev" type="button" class="btn-ghost-admin">Anterior</button><span id="consumoPage"></span><button id="consumoNext" type="button" class="btn-ghost-admin">Siguiente</button></div></section>
+<section id="cartPanel" class="hidden"><h1>Mi carrito</h1><p>Los importes son orientativos; al crear el pedido se aplican los precios actuales del catálogo. El stock se descuenta al confirmar.</p><div id="cartItemsList"></div><p>Total estimado: <strong id="cartTotalText">Q 0.00</strong></p><button id="cartCheckoutBtn" type="button" class="btn-primary">Crear pedido</button><p id="cartMsg" role="status" aria-live="polite"></p></section>
+<section id="ordersPanel" class="hidden"><h1 id="pedidosHeading">Pedidos</h1><label for="pedidosFiltroEstado">Estado</label><select id="pedidosFiltroEstado"><option value="">Todos</option><option>PENDIENTE</option><option>CONFIRMADO</option><option>EN_PREPARACION</option><option>LISTO</option><option>ENTREGADO</option><option>CANCELADO</option></select><p id="pedidosMsg" role="status" aria-live="polite"></p><div id="pedidosList"></div><div class="pagination"><button id="pedidosPrev" type="button" class="btn-ghost-admin">Anterior</button><span id="pedidosPage"></span><button id="pedidosNext" type="button" class="btn-ghost-admin">Siguiente</button></div></section>
+</main>
+<footer class="site-footer">NutriVida <span>Tu bienestar, a tu manera.</span></footer>
+
+<script src="consumo.js"></script>
+<script src="carrito.js"></script>
+<script src="pedidos.js"></script>
+<script src="inventario.js"></script>
+<script src="catalogo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
