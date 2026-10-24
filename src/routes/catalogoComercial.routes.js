@@ -1,0 +1,21 @@
+const express=require("express");
+const {autenticarUsuario,requerirRol}=require("../security/auth");
+const {validarSolicitud}=require("../middleware/validarSolicitud");
+const {ErrorValidacion}=require("../security/validate");
+const {objeto,booleano}=require("../security/catalogoValidacion");
+module.exports=function(sistema,tipo){const r=express.Router(),s=sistema.catalogoComercial;
+ r.use(autenticarUsuario(sistema.repositorios.usuarios));
+ const manejar=fn=>async(req,res,next)=>{try{await fn(req,res);}catch(e){next(e);}};
+ // Solo lectura y exclusivo de ADMINISTRADOR; se registra antes de /:id.
+ if(tipo==="productos")r.get('/imagenes',requerirRol('ADMINISTRADOR'),validarSolicitud('vacio'),manejar(async(req,res)=>res.json({imagenes:require("../security/imagenesProductos").listarImagenes()})));
+ r.get('/',manejar(async(req,res)=>res.json(tipo==="productos"?await s.listar(req.usuario.id,req.query):await s.entidades(req.usuario.id,tipo,req.query))));
+ if(tipo==="productos")r.get('/:id',validarSolicitud('vacio',{id:true}),manejar(async(req,res)=>res.json({producto:await s.detalle(req.usuario.id,req.params.id)})));
+ r.use(requerirRol('ADMINISTRADOR'));
+ r.use((req,res,next)=>Object.keys(req.query).length?next(new ErrorValidacion('No se permiten parámetros en esta operación.')):next());
+ const singular={productos:'producto',categorias:'categoria',ingredientes:'ingrediente'}[tipo];
+ r.post('/',manejar(async(req,res)=>res.status(201).json({[singular]:await s.guardar(req.usuario.id,tipo,null,req.body)})));
+ r.put('/:id',manejar(async(req,res)=>res.json({[singular]:await s.guardar(req.usuario.id,tipo,req.params.id,req.body)})));
+ if(tipo!=="ingredientes")r.put('/:id/estado',manejar(async(req,res)=>{objeto(req.body,['estado']);res.json({[singular]:await s.guardar(req.usuario.id,tipo,req.params.id,{estado:booleano(req.body.estado)})});}));
+ if(tipo==="productos")r.delete('/:id',validarSolicitud('vacio',{id:true}),manejar(async(req,res)=>{await s.guardar(req.usuario.id,tipo,req.params.id,{estado:false});res.status(204).send();}));
+ return r;
+};
