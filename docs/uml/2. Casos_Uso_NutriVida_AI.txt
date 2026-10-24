@@ -1,0 +1,146 @@
+@startuml Casos_Uso_NutriVida_AI
+
+title Diagrama de Casos de Uso - NutriVida AI
+
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 12
+
+skinparam actor {
+    BorderColor #416A8A
+    FontColor #29465B
+}
+
+skinparam usecase {
+    BackgroundColor #EAF8EF
+    BorderColor #4E8A62
+    FontColor #23452E
+    ArrowColor #566573
+}
+
+skinparam rectangle {
+    BorderColor #607D8B
+    FontColor #263238
+}
+
+actor Cliente as cliente
+actor Empleado as empleado
+actor Administrador as admin
+
+rectangle "Sistema Web NutriVida AI" {
+
+    package "Acceso y Perfil" #EAF3FF {
+        usecase "Registrarse" as UC1
+        usecase "Iniciar sesión" as UC2
+        usecase "Gestionar perfil" as UC3
+        usecase "Gestionar preferencias\ny restricciones" as UC4
+        usecase "Gestionar consentimientos\nde personalización IA" as UC26
+    }
+
+    package "Catálogo y Compra" #EAF8EF {
+        usecase "Consultar catálogo" as UC5
+        usecase "Buscar y filtrar\nproductos" as UC6
+        usecase "Gestionar carrito" as UC7
+        usecase "Realizar pedido" as UC8
+        usecase "Consultar pedidos" as UC9
+        usecase "Consultar historial\nde consumo" as UC10
+    }
+
+    package "Asistente Inteligente" #FFF4DD {
+        usecase "Consultar\nNutriVida AI" as UC11
+        usecase "Obtener contexto\ndel cliente" as UC12
+        usecase "Consultar productos\ndisponibles" as UC13
+        usecase "Generar recomendación\npersonalizada" as UC14
+        usecase "Consultar historial\nde conversaciones" as UC15
+        usecase "Guardar conversación" as UC16
+        usecase "Manejar error\ndel servicio IA" as UC17
+    }
+
+    package "Administración" #F3EEFF {
+        usecase "Gestionar productos" as UC18
+        usecase "Gestionar categorías" as UC19
+        usecase "Gestionar ingredientes" as UC20
+        usecase "Gestionar inventario" as UC21
+        usecase "Gestionar pedidos" as UC22
+        usecase "Gestionar usuarios\ny roles" as UC23
+        usecase "Consultar dashboard" as UC24
+        usecase "Consultar auditoría" as UC25
+    }
+}
+
+actor "Servicio de IA" as IA #FFF0C2
+
+' CLIENTE
+cliente --> UC1
+cliente --> UC2
+cliente --> UC3
+cliente --> UC4
+cliente --> UC26
+cliente --> UC5
+cliente --> UC6
+cliente --> UC7
+cliente --> UC8
+cliente --> UC9
+cliente --> UC10
+cliente --> UC11
+cliente --> UC15
+
+' EMPLEADO
+empleado --> UC2
+empleado --> UC5
+empleado --> UC21
+empleado --> UC22
+
+' ADMIN
+admin --> UC2
+admin --> UC5
+admin --> UC18
+admin --> UC19
+admin --> UC20
+admin --> UC21
+admin --> UC22
+admin --> UC23
+admin --> UC24
+admin --> UC25
+
+' IA
+IA --> UC14
+
+' INCLUDES
+UC8 ..> UC5 : <<include>>
+
+UC11 ..> UC12 : <<include>>
+UC11 ..> UC13 : <<include>>
+UC11 ..> UC14 : <<include>>
+UC11 ..> UC16 : <<include>>
+
+UC17 ..> UC11 : <<extend>>
+
+note right of UC4
+FASE 9B-2 «Mi alimentación»: preferencias, restricciones
+dietéticas y alérgenos de un catálogo cerrado (solo el propio
+CLIENTE). UC11 los aplica únicamente con el consentimiento
+de perfil de UC26 (autoriza_contexto_ia = TRUE).
+end note
+
+' ORDEN VISUAL
+UC1 -[hidden]down- UC2
+UC5 -[hidden]down- UC6
+UC11 -[hidden]down- UC12
+UC18 -[hidden]down- UC19
+
+note bottom of UC21
+EMPLEADO y ADMINISTRADOR: consultar inventario/historial,
+configurar mediante AJUSTE y registrar ENTRADA/SALIDA/AJUSTE.
+No concede al empleado CRUD de catálogo ni gestión de usuarios.
+end note
+note bottom of UC22
+EMPLEADO y ADMINISTRADOR (FASE 6): PENDIENTE→CONFIRMADO→EN_PREPARACION
+→LISTO→ENTREGADO y cancelación según la máquina de estados.
+RBAC en backend antes de validar la transición.
+CLIENTE (UC9) solo consulta y cancela SU pedido; nunca estados operativos.
+end note
+@enduml

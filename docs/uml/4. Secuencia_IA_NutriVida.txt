@@ -1,0 +1,169 @@
+@startuml Secuencia_IA_NutriVida
+
+title Secuencia - Recomendación Personalizada con NutriVida AI
+
+autonumber
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam sequenceArrowThickness 1
+skinparam sequenceMessageAlign center
+
+skinparam actor {
+    BackgroundColor #EAF3FF
+    BorderColor #416A8A
+}
+
+skinparam participant {
+    BackgroundColor #EAF8EF
+    BorderColor #4E8A62
+}
+
+skinparam database {
+    BackgroundColor #F3EEFF
+    BorderColor #7656A8
+}
+
+skinparam collections {
+    BackgroundColor #FFF4DD
+    BorderColor #C58B28
+}
+
+actor Cliente
+
+participant "Frontend\nHTML / CSS / JavaScript" as Front #EAF3FF
+participant "API REST\nExpress" as API #EAF3FF
+participant "Servicio NutriVida AI" as AIService #EAF8EF
+database "PostgreSQL" as DB #F3EEFF
+participant "Servicio de IA\nOllama local (llama3.1)" as IA #FFF4DD
+participant "Auditoría / Logs" as LOG #FFE9E9
+
+Cliente -> Front : Escribe consulta
+Front -> API : POST /api/consultas\n{ mensaje }
+
+activate API
+
+API -> API : Validar token
+API -> API : Validar entrada
+
+API -> AIService : procesarConsulta(usuario, mensaje)
+
+activate AIService
+
+AIService -> DB : Consultar consentimientos\n(perfil, historial de compras)
+DB --> AIService : consentimientos + perfil cifrado
+
+alt Consentimiento de perfil = TRUE
+
+    AIService -> AIService : Lista blanca del perfil\n(solo objetivo nutricional;\nsin condiciones médicas ni alergias)
+    AIService -> DB : FASE 9B-2: leer «Mi alimentación»\n(preferencias, restricciones, alérgenos cifrados)
+    DB --> AIService : códigos del catálogo cerrado\n(uso SOLO en el backend)
+
+end
+
+note right of AIService
+FASE 9A: NULL/FALSE = no autorizado; se lee en cada consulta.
+Consentimiento de historial de compras: independiente;
+FASE 9C lo usa solo para el bono de relevancia del backend.
+Historial de conversaciones: fuera de alcance.
+end note
+
+alt Consulta médica
+
+    AIService --> API : mensaje médico fijo (sin Ollama)
+
+else Consulta comercial
+
+AIService -> AIService : Evaluador: detectar restricciones\nDECLARADAS en la consulta actual\n+ unión con las del perfil autorizado (FASE 9B-2)
+
+alt Alergia ambigua ("Tengo alergias") o contradicción con el perfil
+
+    AIService --> API : mensaje fijo: indicar ingrediente\no aclarar / actualizar el perfil (sin Ollama)
+
+else Restricciones claras o ninguna
+
+AIService -> DB : Consultar elegibles (activos, categoría activa,\nprecio > 0, existencia > 0, ingredientes declarados)
+DB --> AIService : productos elegibles
+
+AIService -> AIService : Evaluador: INCOMPATIBLE / NO_VERIFICABLE /\nSIN_CONFLICTO_DETECTADO; excluir los dos primeros
+opt Consentimiento de historial = TRUE (FASE 9C)
+    AIService -> DB : Resumen limitado (solo lectura): pedidos ENTREGADO\ndel cliente, 90 días, máx. 20 pedidos
+    DB --> AIService : conteos por producto y categoría\n(sin IDs de pedido ni datos personales)
+end
+AIService -> AIService : Relevancia SOLO entre permitidos (máx. 5)\n(términos de la restricción no suman;\nbono de preferencias autorizadas +0,5, máx. +1;\nbono de historial autorizado máx. +0,5)
+
+alt Ningún permitido / lo pedido está excluido
+
+    AIService --> API : mensaje fijo de restricción (sin Ollama, sin respaldo)
+
+else Hay candidatos permitidos
+
+AIService -> AIService : Construir contexto seguro
+
+note right of AIService
+Nunca incluir:
+- passwordHash
+- JWT
+- API keys
+- credenciales DB
+end note
+
+AIService -> IA : HTTP local POST /api/generate\nconsulta + contexto permitido
+
+activate IA
+
+alt Respuesta correcta
+
+    IA --> AIService : recomendación
+
+    deactivate IA
+
+    AIService -> AIService : Validar respuesta\n(IDs solo de candidatos permitidos)
+
+    AIService -> DB : Resolver IDs (datos frescos)
+    DB --> AIService : productos vigentes + ingredientes
+    AIService -> AIService : Re-evaluar con el evaluador;\ndescartar los que ya no cumplen\n+ aviso prudente (sin garantías)
+
+    AIService -> DB : Guardar consulta
+    AIService -> DB : Guardar respuesta
+
+    AIService --> API : RespuestaIA
+
+    API --> Front : HTTP 200 + respuesta
+    Front --> Cliente : Mostrar recomendación
+
+else Timeout / API no disponible
+
+    IA --> AIService : error / timeout
+
+    deactivate IA
+
+    AIService -> LOG : Registrar error controlado
+    LOG -> DB : INSERT errores_sistema
+
+    AIService --> API : ServicioIAException
+
+    API --> Front : HTTP 503\nservicio temporalmente no disponible
+
+    Front --> Cliente : Mostrar mensaje controlado
+
+end
+
+end
+end
+end
+
+note right of AIService
+FASE 9B-1: Ollama nunca decide compatibilidad ni recibe
+productos excluidos; el respaldo del backend se abstiene
+con restricciones. Sin "100 % seguro", "libre de alérgenos",
+"apto para celíacos" ni "garantizado sin trazas".
+Si el modelo no elige productos bajo una restricción, se explica
+el filtrado (conteos y categorías reales), no el texto general.
+end note
+
+deactivate AIService
+deactivate API
+
+@enduml

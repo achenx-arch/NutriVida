@@ -1,0 +1,1234 @@
+{
+  "documento": "NutriVida(1).pdf",
+  "sha256Documento": "8e4e8a2ae480722b2c26441d11cb37c3999bafa1427969b40f373b0ac4db3203",
+  "paginas": 16,
+  "generado": "2026-10-01",
+  "estado": "BORRADOR_PARA_REVISION — no cargado en PostgreSQL",
+  "reglas": [
+    "Textos copiados del PDF sin modificar (solo se unieron saltos de línea).",
+    "Precio, stock, stock mínimo, valores nutricionales y categoría: NO documentados → null.",
+    "Cantidades de ingredientes no documentadas → null.",
+    "Imágenes: WebP calidad 90, sin metadatos, sin ampliar (ancho máximo 800 px)."
+  ],
+  "productos": [
+    {
+      "numero": 1,
+      "nombre": "Barras Energéticas Naturales",
+      "descripcion": "Productos nutritivos diseñados para aportar energía de forma rápida y saludable, ideales para estudiantes, deportistas y personas activas.",
+      "ingredientes": [
+        {
+          "nombre": "Avena integral",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel natural",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutos secos (almendras, maní, nueces)",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas deshidratadas (pasas, arándanos)",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Semillas (chía, linaza)",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Barras Energéticas Naturales",
+      "procedimientoElaboracion": "Se mezclan todos los ingredientes hasta obtener una masa uniforme. Luego se compacta en moldes, se hornea ligeramente o se refrigera, se corta en porciones y se empaca de forma individual.",
+      "imagen": {
+        "archivoPropuesto": "barras-energeticas-naturales.webp",
+        "rutaPropuesta": "/images/productos/barras-energeticas-naturales.webp",
+        "sha256": "c8550d4ba6d27953209b6cff0e92f1b41980a80a8af1fcc4d35bf2d79e9b5a47",
+        "anchoPx": 129,
+        "altoPx": 90,
+        "bytes": 5458,
+        "origen": {
+          "pagina": 8,
+          "objetoImagenPdf": 2,
+          "figuraEnDocumento": "Figura 2",
+          "ubicadaBajoProducto": 1,
+          "etiquetaVisibleEnEmpaque": "BARRA ENERGÉTICA NATURAL",
+          "resolucionOriginalPx": [
+            129,
+            90
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 2,
+      "nombre": "Bebidas Saludables (Jugos Naturales y Smoothies)",
+      "descripcion": "Bebidas naturales ricas en vitaminas, diseñadas para hidratar y nutrir el cuerpo.",
+      "ingredientes": [
+        {
+          "nombre": "Frutas frescas (naranja, piña, mango, fresa)",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Agua purificada o leche vegetal",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Endulzantes naturales (miel o Stevia)",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Bebidas Saludables",
+      "procedimientoElaboracion": "Las frutas se lavan y desinfectan, luego se procesan en extractores o licuadoras. Se mezcla con agua o leche vegetal, se envasa en condiciones higiénicas y se mantiene refrigerado.",
+      "imagen": {
+        "archivoPropuesto": "bebidas-saludables-jugos-naturales-y-smoothies.webp",
+        "rutaPropuesta": "/images/productos/bebidas-saludables-jugos-naturales-y-smoothies.webp",
+        "sha256": "6c8bff96a5e79fe7a2ffef02c25d0feacb4ce3c49f7b70f6b89a044a1e4d026a",
+        "anchoPx": 122,
+        "altoPx": 98,
+        "bytes": 5554,
+        "origen": {
+          "pagina": 8,
+          "objetoImagenPdf": 3,
+          "figuraEnDocumento": "Figura 3",
+          "ubicadaBajoProducto": 2,
+          "etiquetaVisibleEnEmpaque": "BEBIDAS SALUDABLES",
+          "resolucionOriginalPx": [
+            122,
+            98
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 3,
+      "nombre": "Snacks Nutritivos (Granola y Mix Saludable)",
+      "descripcion": "Productos listos para consumir, ideales como meriendas saludables.",
+      "ingredientes": [
+        {
+          "nombre": "Avena",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutos secos",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Semillas",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel o jarabe natural",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Snacks Nutritivos",
+      "procedimientoElaboracion": "Los ingredientes se mezclan y se hornean para dar textura crujiente. Luego se enfrían, se dividen en porciones y se empacan.",
+      "imagen": {
+        "archivoPropuesto": "snacks-nutritivos-granola-y-mix-saludable.webp",
+        "rutaPropuesta": "/images/productos/snacks-nutritivos-granola-y-mix-saludable.webp",
+        "sha256": "6d03ba017b59f4c6bde3f5175dd960224a41f0d70c3805f39915acb8ead04db2",
+        "anchoPx": 119,
+        "altoPx": 96,
+        "bytes": 5696,
+        "origen": {
+          "pagina": 9,
+          "objetoImagenPdf": 4,
+          "figuraEnDocumento": "Figura 4",
+          "ubicadaBajoProducto": 3,
+          "etiquetaVisibleEnEmpaque": "SNACKS NUTRITIVOS",
+          "resolucionOriginalPx": [
+            119,
+            96
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 4,
+      "nombre": "Suplementos Naturales",
+      "descripcion": "Productos diseñados para complementar la alimentación y mejorar la salud.",
+      "ingredientes": [
+        {
+          "nombre": "Proteína vegetal",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Vitaminas naturales",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Extractos de plantas",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Suplementos Naturales",
+      "procedimientoElaboracion": "Se procesan los ingredientes naturales en polvo, se mezclan en proporciones adecuadas y se envasan en recipientes sellados.",
+      "imagen": {
+        "archivoPropuesto": "suplementos-naturales.webp",
+        "rutaPropuesta": "/images/productos/suplementos-naturales.webp",
+        "sha256": "5322c50ed9f2bd5829d9d7982e0f0152bbd505231d9bd8daeb8e200a63fa96b7",
+        "anchoPx": 102,
+        "altoPx": 108,
+        "bytes": 5004,
+        "origen": {
+          "pagina": 9,
+          "objetoImagenPdf": 5,
+          "figuraEnDocumento": "Figura 5",
+          "ubicadaBajoProducto": 4,
+          "etiquetaVisibleEnEmpaque": "SUPLEMENTOS NATURALES / PROTEÍNA VEGETAL",
+          "resolucionOriginalPx": [
+            102,
+            108
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 5,
+      "nombre": "Productos Orgánicos",
+      "descripcion": "Alimentos producidos sin químicos ni pesticidas, garantizando mayor pureza.",
+      "ingredientes": [
+        {
+          "nombre": "Miel natural",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas orgánicas",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Vegetales",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Productos Orgánicos",
+      "procedimientoElaboracion": "Se recolectan productos naturales, se limpian, seleccionan y empacan sin alterar sus propiedades.",
+      "imagen": {
+        "archivoPropuesto": "productos-organicos.webp",
+        "rutaPropuesta": "/images/productos/productos-organicos.webp",
+        "sha256": "327efc43d5124cdf0a5e1ca17cc84dba101da74d0a9c65801f0ae41edc5ef73f",
+        "anchoPx": 113,
+        "altoPx": 100,
+        "bytes": 6146,
+        "origen": {
+          "pagina": 9,
+          "objetoImagenPdf": 6,
+          "figuraEnDocumento": "Figura 6",
+          "ubicadaBajoProducto": 5,
+          "etiquetaVisibleEnEmpaque": "PRODUCTOS ORGÁNICOS",
+          "resolucionOriginalPx": [
+            113,
+            100
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 6,
+      "nombre": "Bebidas Funcionales (Energéticas Naturales)",
+      "descripcion": "Bebidas que aportan beneficios adicionales como energía o mejora digestiva.",
+      "ingredientes": [
+        {
+          "nombre": "Té verde",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Jengibre",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Limón",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Bebidas Funcionales",
+      "procedimientoElaboracion": "Se infusionan los ingredientes naturales, se mezclan, se enfrían y se envasa.",
+      "imagen": {
+        "archivoPropuesto": "bebidas-funcionales-energeticas-naturales.webp",
+        "rutaPropuesta": "/images/productos/bebidas-funcionales-energeticas-naturales.webp",
+        "sha256": "4b19306d5078ab2142dd9f78d7f5413755c511baf84bb61f30a9d90c471756bb",
+        "anchoPx": 99,
+        "altoPx": 106,
+        "bytes": 5974,
+        "origen": {
+          "pagina": 10,
+          "objetoImagenPdf": 7,
+          "figuraEnDocumento": "Figura 7",
+          "ubicadaBajoProducto": 6,
+          "etiquetaVisibleEnEmpaque": "BEBIDAS FUNCIONALES",
+          "resolucionOriginalPx": [
+            99,
+            106
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 7,
+      "nombre": "Galletas Saludables",
+      "descripcion": "Alternativa a las galletas tradicionales, con menor contenido de azúcar y mayor valor nutricional.",
+      "ingredientes": [
+        {
+          "nombre": "Harina integral o de avena",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel o endulzantes naturales",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutos secos",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Aceite vegetal",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Galletas Saludables",
+      "procedimientoElaboracion": "Se mezclan los ingredientes, se forman las galletas, se hornean y se empacan.",
+      "imagen": {
+        "archivoPropuesto": "galletas-saludables.webp",
+        "rutaPropuesta": "/images/productos/galletas-saludables.webp",
+        "sha256": "3af3704784c9adf0694883646bd161f405bb5ffedba70397d36d6f43bc6b7678",
+        "anchoPx": 117,
+        "altoPx": 94,
+        "bytes": 5170,
+        "origen": {
+          "pagina": 10,
+          "objetoImagenPdf": 8,
+          "figuraEnDocumento": "Figura 8",
+          "ubicadaBajoProducto": 7,
+          "etiquetaVisibleEnEmpaque": "GALLETAS SALUDABLES (caja)",
+          "resolucionOriginalPx": [
+            117,
+            94
+          ]
+        },
+        "estadoAsociacion": "REQUIERE_DECISION",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": "Tres figuras de galletas: objeto 8 (caja, elegida por mayor tamaño), objeto 9 (bolsa) y objeto 1 (misma caja que el 8, aparece bajo el producto 1).",
+        "alternativas": [
+          {
+            "archivoPropuesto": "galletas-saludables-alternativa-1.webp",
+            "rutaPropuesta": "/images/productos/galletas-saludables-alternativa-1.webp",
+            "sha256": "ee877783ee138b7175cd8741e61bae373ecb594284df02902e7ff8baa79a3d1b",
+            "anchoPx": 129,
+            "altoPx": 100,
+            "bytes": 5432,
+            "origen": {
+              "pagina": 10,
+              "objetoImagenPdf": 9,
+              "figuraEnDocumento": "Figura 8",
+              "ubicadaBajoProducto": 7,
+              "etiquetaVisibleEnEmpaque": "GALLETAS SALUDABLES (bolsa)",
+              "resolucionOriginalPx": [
+                129,
+                100
+              ]
+            }
+          },
+          {
+            "archivoPropuesto": "galletas-saludables-alternativa-2.webp",
+            "rutaPropuesta": "/images/productos/galletas-saludables-alternativa-2.webp",
+            "sha256": "10ba4d6c4866dbe8c99fd0922dab2f644f11dd0cbd0291adf8ddbef710ffee48",
+            "anchoPx": 105,
+            "altoPx": 84,
+            "bytes": 4194,
+            "origen": {
+              "pagina": 8,
+              "objetoImagenPdf": 1,
+              "figuraEnDocumento": "Figura 2",
+              "ubicadaBajoProducto": 1,
+              "etiquetaVisibleEnEmpaque": "GALLETAS SALUDABLES",
+              "resolucionOriginalPx": [
+                105,
+                84
+              ]
+            }
+          }
+        ]
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 8,
+      "nombre": "Comidas Listas Saludables",
+      "descripcion": "Platos preparados balanceados, listos para consumir.",
+      "ingredientes": [
+        {
+          "nombre": "Arroz integral",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Vegetales",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Proteínas (pollo, legumbres)",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Comidas Listas Saludables",
+      "procedimientoElaboracion": "Se cocinan los alimentos, se combinan en porciones balanceadas, se empacan y se refrigeran.",
+      "imagen": {
+        "archivoPropuesto": "comidas-listas-saludables.webp",
+        "rutaPropuesta": "/images/productos/comidas-listas-saludables.webp",
+        "sha256": "5ef74b27badaf072020aee4758664dadfb489c2510b501e4d2b65ac9adef6761",
+        "anchoPx": 124,
+        "altoPx": 100,
+        "bytes": 5454,
+        "origen": {
+          "pagina": 10,
+          "objetoImagenPdf": 10,
+          "figuraEnDocumento": "Figura 9",
+          "ubicadaBajoProducto": 8,
+          "etiquetaVisibleEnEmpaque": "COMIDA LISTA SALUDABLE",
+          "resolucionOriginalPx": [
+            124,
+            100
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 9,
+      "nombre": "Yogurt Natural con Frutas",
+      "descripcion": "Producto lácteo o vegetal rico en probióticos, ideal para mejorar la digestión y fortalecer el sistema inmunológico.",
+      "ingredientes": [
+        {
+          "nombre": "Leche o base vegetal",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Cultivos probióticos",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas naturales",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel o Stevia",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Yogurt Natural con Frutas",
+      "procedimientoElaboracion": "Se fermenta la leche o base vegetal con cultivos probióticos, se mezcla con frutas y se envasa.",
+      "imagen": {
+        "archivoPropuesto": "yogurt-natural-con-frutas.webp",
+        "rutaPropuesta": "/images/productos/yogurt-natural-con-frutas.webp",
+        "sha256": "937065835be492997e6c97a54fa6d0d34a37fa4dd8243f7c78e2ac91e3ae57d9",
+        "anchoPx": 94,
+        "altoPx": 135,
+        "bytes": 3232,
+        "origen": {
+          "pagina": 11,
+          "objetoImagenPdf": 11,
+          "figuraEnDocumento": "Figura 10",
+          "ubicadaBajoProducto": 9,
+          "etiquetaVisibleEnEmpaque": "YOGURT NATURAL CON FRUTAS",
+          "resolucionOriginalPx": [
+            94,
+            135
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": true,
+        "observacion": null,
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 10,
+      "nombre": "Ensaladas Frescas Listas para Consumir",
+      "descripcion": "Combinaciones de vegetales frescos con proteínas saludables, listas para una alimentación rápida y balanceada.",
+      "ingredientes": [
+        {
+          "nombre": "Lechuga",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Tomate",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Zanahoria",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Pollo o legumbres",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Aderezos naturales",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Ensaladas Frescas",
+      "procedimientoElaboracion": "Se lavan y desinfectan los ingredientes, se cortan, se combinan y se empacan en frío.",
+      "imagen": {
+        "archivoPropuesto": "ensaladas-frescas-listas-para-consumir.webp",
+        "rutaPropuesta": "/images/productos/ensaladas-frescas-listas-para-consumir.webp",
+        "sha256": "186596f73d5d9f5881679cb4a95fc625a64599d1a0b6c0cd9588411dbedcd1fe",
+        "anchoPx": 122,
+        "altoPx": 117,
+        "bytes": 5136,
+        "origen": {
+          "pagina": 11,
+          "objetoImagenPdf": 12,
+          "figuraEnDocumento": "Figura 10",
+          "ubicadaBajoProducto": 9,
+          "etiquetaVisibleEnEmpaque": "ENSALADA FRESCA CON POLLO",
+          "resolucionOriginalPx": [
+            122,
+            117
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 9 (Figura 10); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 11,
+      "nombre": "Pan Integral Saludable",
+      "descripcion": "Pan elaborado con harinas integrales, alto en fibra y bajo en azúcares refinados.",
+      "ingredientes": [
+        {
+          "nombre": "Harina integral",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Levadura",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Agua",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Semillas",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Pan Integral Saludable",
+      "procedimientoElaboracion": "Se mezclan los ingredientes, se amasa, se deja fermentar, se hornea y se empaca.",
+      "imagen": {
+        "archivoPropuesto": "pan-integral-saludable.webp",
+        "rutaPropuesta": "/images/productos/pan-integral-saludable.webp",
+        "sha256": "27b4392016e83e02962c67fdec66f2cc1dfe32f395f33ae297132c6feff9da3c",
+        "anchoPx": 85,
+        "altoPx": 130,
+        "bytes": 3276,
+        "origen": {
+          "pagina": 11,
+          "objetoImagenPdf": 13,
+          "figuraEnDocumento": "Figura 11",
+          "ubicadaBajoProducto": 10,
+          "etiquetaVisibleEnEmpaque": "PAN INTEGRAL",
+          "resolucionOriginalPx": [
+            85,
+            130
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 10 (Figura 11); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 12,
+      "nombre": "Leches Vegetales (Almendra, Avena, Coco)",
+      "descripcion": "Alternativa a la leche tradicional, ideal para personas intolerantes a la lactosa.",
+      "ingredientes": [
+        {
+          "nombre": "Almendras, avena o coco",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Agua",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Endulzante natural",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Leches Vegetales",
+      "procedimientoElaboracion": "Se licúan los ingredientes con agua, se filtran y se envasan.",
+      "imagen": {
+        "archivoPropuesto": "leches-vegetales-almendra-avena-coco.webp",
+        "rutaPropuesta": "/images/productos/leches-vegetales-almendra-avena-coco.webp",
+        "sha256": "459f1731cbcb53fc7ecab698f926ce4e05144bf933c238b5056789165022d60e",
+        "anchoPx": 89,
+        "altoPx": 146,
+        "bytes": 3892,
+        "origen": {
+          "pagina": 12,
+          "objetoImagenPdf": 14,
+          "figuraEnDocumento": "Figura 12",
+          "ubicadaBajoProducto": 11,
+          "etiquetaVisibleEnEmpaque": "LECHE DE ALMENDRA 100% VEGETAL",
+          "resolucionOriginalPx": [
+            89,
+            146
+          ]
+        },
+        "estadoAsociacion": "REQUIERE_CONFIRMACION",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "La etiqueta muestra solo \"Leche de almendra\"; el producto es \"Leches Vegetales (Almendra, Avena, Coco)\". En el PDF esta figura aparece bajo el producto 11 (Figura 12); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 13,
+      "nombre": "Postres Saludables",
+      "descripcion": "Opciones dulces bajas en azúcar, elaboradas con ingredientes naturales y nutritivos.",
+      "ingredientes": [
+        {
+          "nombre": "Harina integral",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Cacao natural",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel o Stevia",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Postres Saludables",
+      "procedimientoElaboracion": "Se mezclan los ingredientes, se hornean o refrigeran según el tipo y se empacan.",
+      "imagen": {
+        "archivoPropuesto": "postres-saludables.webp",
+        "rutaPropuesta": "/images/productos/postres-saludables.webp",
+        "sha256": "f2b7b6aac2b91f12aa53e433f698a5e503fde5db39d0a7d0269ead6cf936f064",
+        "anchoPx": 132,
+        "altoPx": 156,
+        "bytes": 4520,
+        "origen": {
+          "pagina": 12,
+          "objetoImagenPdf": 15,
+          "figuraEnDocumento": "Figura 13",
+          "ubicadaBajoProducto": 12,
+          "etiquetaVisibleEnEmpaque": "BROWNIE INTEGRAL",
+          "resolucionOriginalPx": [
+            132,
+            156
+          ]
+        },
+        "estadoAsociacion": "REQUIERE_CONFIRMACION",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "La etiqueta muestra \"Brownie integral\", no \"Postres Saludables\". En el PDF esta figura aparece bajo el producto 12 (Figura 13); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 14,
+      "nombre": "Chips Saludables (Plátano, Yuca o Vegetales)",
+      "descripcion": "Snacks crujientes horneados, sin grasas saturadas.",
+      "ingredientes": [
+        {
+          "nombre": "Plátano, yuca o vegetales",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Aceite vegetal mínimo",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Sal natural",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Chips Saludables",
+      "procedimientoElaboracion": "Se cortan los ingredientes en rodajas, se hornean hasta quedar crujientes y se empacan.",
+      "imagen": {
+        "archivoPropuesto": "chips-saludables-platano-yuca-o-vegetales.webp",
+        "rutaPropuesta": "/images/productos/chips-saludables-platano-yuca-o-vegetales.webp",
+        "sha256": "da02bb253de63f33913a5cd5d0009d7cc7537d179d82fa4edd80f4769c11e175",
+        "anchoPx": 151,
+        "altoPx": 167,
+        "bytes": 7078,
+        "origen": {
+          "pagina": 13,
+          "objetoImagenPdf": 16,
+          "figuraEnDocumento": "Figura 14",
+          "ubicadaBajoProducto": 13,
+          "etiquetaVisibleEnEmpaque": "CHIPS SALUDABLES DE PLÁTANO HORNEADOS",
+          "resolucionOriginalPx": [
+            151,
+            167
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 13 (Figura 14); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 15,
+      "nombre": "Proteína Vegana en Polvo",
+      "descripcion": "Suplemento proteico 100% vegetal con vitaminas y minerales.",
+      "ingredientes": [
+        {
+          "nombre": "Proteína de arveja",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Quinoa",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Cacao natural",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Proteína Vegana en Polvo",
+      "procedimientoElaboracion": "Se mezcla 1 scoop (aproximadamente 30 g) con 250-300 ml de bebida vegetal o agua en un shaker. Para mayor cremosidad, licuar con hielo y fruta.",
+      "imagen": {
+        "archivoPropuesto": "proteina-vegana-en-polvo.webp",
+        "rutaPropuesta": "/images/productos/proteina-vegana-en-polvo.webp",
+        "sha256": "a65b33c7b8181efa46ced3e8553ee571b96ec3747a44ef1fb0e82fa799d862a3",
+        "anchoPx": 293,
+        "altoPx": 314,
+        "bytes": 19686,
+        "origen": {
+          "pagina": 13,
+          "objetoImagenPdf": 17,
+          "figuraEnDocumento": "Figura 15",
+          "ubicadaBajoProducto": 14,
+          "etiquetaVisibleEnEmpaque": "PROTEÍNA VEGANA EN POLVO",
+          "resolucionOriginalPx": [
+            293,
+            314
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 14 (Figura 15); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 16,
+      "nombre": "Mantequillas de Frutos Secos",
+      "descripcion": "Cremas untables sin aditivos artificiales.",
+      "ingredientes": [
+        {
+          "nombre": "Maní",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Almendra",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Aceite de coco",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Mantequillas de Frutos Secos",
+      "procedimientoElaboracion": "Se tuestan los frutos secos naturales 8-10 minutos a 150°C. Se trituran en procesador de alimentos potente hasta que suelten sus aceites naturales y se forme una crema suave (aproximadamente 10 minutos).",
+      "imagen": {
+        "archivoPropuesto": "mantequillas-de-frutos-secos.webp",
+        "rutaPropuesta": "/images/productos/mantequillas-de-frutos-secos.webp",
+        "sha256": "7d11915a58f963f9ac66651a4f34af287965fb6ce1848b0ecde47faf17168966",
+        "anchoPx": 288,
+        "altoPx": 314,
+        "bytes": 21330,
+        "origen": {
+          "pagina": 14,
+          "objetoImagenPdf": 18,
+          "figuraEnDocumento": "Figura 16",
+          "ubicadaBajoProducto": 15,
+          "etiquetaVisibleEnEmpaque": "MANTEQUILLA DE FRUTOS SECOS",
+          "resolucionOriginalPx": [
+            288,
+            314
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 15 (Figura 16); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 17,
+      "nombre": "Cereales Integrales para Desayuno",
+      "descripcion": "Granos integrales para mañanas nutritivas.",
+      "ingredientes": [
+        {
+          "nombre": "Avena",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Quinoa",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Chía",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Miel",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Cereales Integrales para Desayuno",
+      "procedimientoElaboracion": "Se mezclan copos de avena integral, frutos secos, semillas y aceite de coco. Se hornea a 170°C removiendo cada 10 minutos hasta que estén dorados.",
+      "imagen": {
+        "archivoPropuesto": "cereales-integrales-para-desayuno.webp",
+        "rutaPropuesta": "/images/productos/cereales-integrales-para-desayuno.webp",
+        "sha256": "af07137ead730b9a714094f026a42d09ee8baacb4fd6adf2cf8fa8f414cdeb58",
+        "anchoPx": 291,
+        "altoPx": 317,
+        "bytes": 25140,
+        "origen": {
+          "pagina": 14,
+          "objetoImagenPdf": 19,
+          "figuraEnDocumento": "Figura 17",
+          "ubicadaBajoProducto": 16,
+          "etiquetaVisibleEnEmpaque": "CEREALES INTEGRALES PARA DESAYUNO",
+          "resolucionOriginalPx": [
+            291,
+            317
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 16 (Figura 17); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 18,
+      "nombre": "Helados Saludables",
+      "descripcion": "Sin azúcar añadida, con base de frutas congeladas.",
+      "ingredientes": [
+        {
+          "nombre": "Plátano congelado",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Coco",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Frutas naturales",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Helados Saludables",
+      "procedimientoElaboracion": "Se congelan plátanos o frutos rojos. Se trituran en procesador potente junto con yogur griego (o yogur vegano) hasta obtener textura cremosa. Se sirve inmediatamente o se congela 1 hora.",
+      "imagen": {
+        "archivoPropuesto": "helados-saludables.webp",
+        "rutaPropuesta": "/images/productos/helados-saludables.webp",
+        "sha256": "dbaed828955b59e121a9892516f2fc437f438264cec93a1a6ea0051d04e9cfa1",
+        "anchoPx": 282,
+        "altoPx": 304,
+        "bytes": 21568,
+        "origen": {
+          "pagina": 15,
+          "objetoImagenPdf": 20,
+          "figuraEnDocumento": "Figura 18",
+          "ubicadaBajoProducto": 17,
+          "etiquetaVisibleEnEmpaque": "HELADOS SALUDABLES",
+          "resolucionOriginalPx": [
+            282,
+            304
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 17 (Figura 18); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 19,
+      "nombre": "Sopas y Cremas Saludables",
+      "descripcion": "Cremas nutritivas listas para calentar.",
+      "ingredientes": [
+        {
+          "nombre": "Zapallo",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Zanahoria",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Papa",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Coco",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Especias",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Sopas y Cremas Saludables",
+      "procedimientoElaboracion": "Se asan verduras (calabacín, calabaza, zanahoria) con ajo y cebolla. Se licuan con caldo de verduras y se añade crema de coco o yogur griego para cremosidad.",
+      "imagen": {
+        "archivoPropuesto": "sopas-y-cremas-saludables.webp",
+        "rutaPropuesta": "/images/productos/sopas-y-cremas-saludables.webp",
+        "sha256": "4e914bc8f0e7b8f5c5d7b0033f4bd3c373933ac1130bcc25a60ef4ec79675733",
+        "anchoPx": 281,
+        "altoPx": 311,
+        "bytes": 17290,
+        "origen": {
+          "pagina": 15,
+          "objetoImagenPdf": 21,
+          "figuraEnDocumento": "Figura 19",
+          "ubicadaBajoProducto": 18,
+          "etiquetaVisibleEnEmpaque": "SOPAS Y CREMAS SALUDABLES",
+          "resolucionOriginalPx": [
+            281,
+            311
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 18 (Figura 19); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    },
+    {
+      "numero": 20,
+      "nombre": "Dips y Salsas Saludables",
+      "descripcion": "Aderezos naturales bajos en grasas.",
+      "ingredientes": [
+        {
+          "nombre": "Aguacate",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Tomate",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Garbanzo",
+          "cantidadDescriptiva": null
+        },
+        {
+          "nombre": "Limón",
+          "cantidadDescriptiva": null
+        }
+      ],
+      "seccionIngredientesEnDocumento": "Dips y Salsas Saludables",
+      "procedimientoElaboracion": "Base de humus (garbanzos cocidos, tahini, limón) o aguacate (guacamole). Se procesa aguacate, cilantro, yogur griego y limón para un dip verde cremoso.",
+      "imagen": {
+        "archivoPropuesto": "dips-y-salsas-saludables.webp",
+        "rutaPropuesta": "/images/productos/dips-y-salsas-saludables.webp",
+        "sha256": "f0a8b777dc94a6b31738ac6e729da4036fdd50028861369d4dccf5f6b563d76b",
+        "anchoPx": 288,
+        "altoPx": 305,
+        "bytes": 21446,
+        "origen": {
+          "pagina": 16,
+          "objetoImagenPdf": 22,
+          "figuraEnDocumento": "Figura 20",
+          "ubicadaBajoProducto": 19,
+          "etiquetaVisibleEnEmpaque": "DIPS Y SALSAS SALUDABLES",
+          "resolucionOriginalPx": [
+            288,
+            305
+          ]
+        },
+        "estadoAsociacion": "ASOCIADA_POR_ETIQUETA",
+        "coincideConUbicacionEnDocumento": false,
+        "observacion": "En el PDF esta figura aparece bajo el producto 19 (Figura 20); se asocia por la etiqueta impresa en el empaque.",
+        "alternativas": []
+      },
+      "noDocumentado": {
+        "precio": null,
+        "stock": null,
+        "stockMinimo": null,
+        "valoresNutricionales": null,
+        "categoria": null
+      },
+      "fuente": {
+        "nombreYDescripcion": "Productos Principales (pp. 2–3)",
+        "ingredientes": "Ingredientes (pp. 3–7)",
+        "procedimiento": "Procedimientos de Elaboración (pp. 7–16)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+@startuml Clases_NutriVida_AI
+
+title Diagrama de Clases - NutriVida AI
+
+top to bottom direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 10
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #52616B
+
+skinparam class {
+    BackgroundColor #F3EEFF
+    BorderColor #7656A8
+    FontColor #312E46
+    AttributeFontColor #312E46
+}
+
+' ====================================================
+' USUARIOS
+' ====================================================
+
+package "Usuarios" #EAF3FF {
+
+class Rol {
+    - idRol: Long
+    - nombre: String
+    - descripcion: String
+}
+
+class Usuario {
+    - idUsuario: UUID
+    - nombre: String
+    - apellido: String
+    - correo: String
+    - passwordHash: String
+    - datosLegado: JSON (opcional)
+    - estado: Boolean
+    --
+    + autenticar(password: String): Boolean
+    + actualizarPerfil(): void
+}
+
+class PerfilCliente {
+    - idPerfil: UUID
+    - telefono: String
+    - fechaNacimiento: Date
+    - autorizaContextoIA: Boolean (opcional)
+    - autorizaHistorialIA: Boolean (opcional)
+    - datosLegado: JSON (opcional)
+    --
+    + actualizar(): void
+    + actualizarConsentimientos(perfil, historial): void
+}
+
+class PreferenciaCliente {
+    - idPreferencia: Long
+    - tipo: String
+    - descripcion: Text
+    - versionCifrado: Integer (opcional)
+    - activa: Boolean
+    --
+    + activar(): void
+    + desactivar(): void
+}
+
+class CatalogoAlimentacion <<service>> {
+    - preferencias: INTEGRALES, FRUTAS, BEBIDAS_NATURALES, SNACKS_SALUDABLES
+    - restricciones: VEGETARIANO, VEGANO, SIN_LACTEOS, SIN_LACTOSA, SIN_GLUTEN, SIN_AZUCAR_ANADIDO
+    - alergenos: MANI, FRUTOS_SECOS, GLUTEN, LACTEOS, SOYA, SESAMO
+    --
+    + restriccionesDePerfil(alimentacion): List
+    + bonoPreferencias(producto, preferencias): Decimal (máx. 1)
+}
+
+class ResumenHistorialIA <<service>> {
+    - limites: 90 días, 20 pedidos ENTREGADO, 5 productos, 5 categorías
+    --
+    + resumenIA(idCliente): conteos por producto y categoría
+    + bonoHistorial(producto, resumen): Decimal (máx. 0,5)
+}
+
+}
+
+' ====================================================
+' CATALOGO
+' ====================================================
+
+package "Catálogo" #EAF8EF {
+
+class Categoria {
+    - idCategoria: Long
+    - nombre: String
+    - descripcion: String
+    - estado: Boolean
+}
+
+class Producto {
+    - idProducto: UUID
+    - nombre: String
+    - descripcion: String
+    - precio: Decimal (opcional si inactivo)
+    - stockMinimo: Integer (opcional)
+    - imagenUrl: String (opcional)
+    - valoresNutricionales: Text (opcional)
+    - datosLegado: JSON (opcional)
+    - estado: Boolean
+    --
+    + actualizarPrecio(precio: Decimal): void
+    + activar(): void
+    + desactivar(): void
+}
+
+class Ingrediente {
+    - idIngrediente: Long
+    - nombre: String
+    - descripcion: String
+}
+
+class ProductoIngrediente {
+    - cantidadDescriptiva: String
+}
+
+}
+
+' ====================================================
+' INVENTARIO
+' ====================================================
+
+package "Inventario" #FFF7DC {
+
+class Inventario {
+    - idInventario: Long
+    - cantidad: Integer
+    --
+    + hayExistencia(cantidad: Integer): Boolean
+    + actualizarExistencia(cantidad: Integer): void
+}
+
+class MovimientoInventario {
+    - idMovimiento: Long
+    - tipo: TipoMovimiento
+    - cantidad: Integer
+    - existenciaAnterior: Integer (opcional solo inicial)
+    - existenciaNueva: Integer
+    - motivo: String
+    - fecha: DateTime
+}
+
+enum TipoMovimiento {
+    ENTRADA
+    SALIDA
+    AJUSTE
+}
+
+}
+
+' ====================================================
+' PEDIDOS
+' ====================================================
+
+package "Pedidos" #EAF8EF {
+
+class Pedido {
+    - idPedido: Long
+    - estado: EstadoPedido
+    - subtotal: Decimal
+    - total: Decimal
+    - fechaPedido: DateTime
+    --
+    + agregarProducto(): void
+    + calcularTotal(): Decimal
+    + cambiarEstado(): void
+}
+
+class DetallePedido {
+    - idDetalle: Long
+    - cantidad: Integer
+    - precioUnitario: Decimal
+    - subtotal: Decimal
+    --
+    + calcularSubtotal(): Decimal
+}
+
+enum EstadoPedido {
+    PENDIENTE
+    CONFIRMADO
+    EN_PREPARACION
+    LISTO
+    ENTREGADO
+    CANCELADO
+}
+
+}
+
+' ====================================================
+' IA
+' ====================================================
+
+package "NutriVida AI" #FFF4DD {
+
+class ConversacionIA {
+    - idConversacion: UUID
+    - titulo: String (opcional)
+    - estado: EstadoConsulta
+    - revisada: Boolean (opcional)
+    - idInteraccionOrigen: UUID (opcional)
+    - datosLegado: JSON (opcional)
+    - fechaInicio: DateTime
+    --
+    + agregarMensaje(): void
+}
+
+class MensajeIA {
+    - idMensaje: Long
+    - tipo: TipoMensaje
+    - contenido: Text
+    - versionCifrado: Integer
+    - fecha: DateTime
+}
+
+enum TipoMensaje {
+    USUARIO
+    ASISTENTE
+    SISTEMA
+}
+
+class AsistenteNutriVida <<service>> {
+    + construirContexto(usuario: Usuario): ContextoIA
+    + recomendarProductos(consulta: String): RespuestaIA
+    + manejarError(): void
+}
+
+class EvaluadorAlimentario <<service>> {
+    - versionDiccionario: Integer
+    --
+    + prepararConsulta(texto: String): RestriccionesConsulta
+    + evaluarProducto(producto: Producto, restricciones: List): EvaluacionProducto
+    + filtrarProductos(productos: List, restricciones: List): Permitidos/Excluidos
+}
+
+enum EstadoCompatibilidad {
+    INCOMPATIBLE
+    NO_VERIFICABLE
+    SIN_CONFLICTO_DETECTADO
+}
+
+class ContextoIA <<DTO>> {
+    - preferencias: List
+    - historialConsumo: List
+    - productosDisponibles: List
+    - historialConversacion: List
+}
+
+}
+
+' ====================================================
+' SEGURIDAD
+' ====================================================
+
+package "Seguridad y Auditoría" #FFE9E9 {
+
+class Auditoria {
+    - idAuditoria: UUID
+    - accion: String
+    - entidad: String (opcional)
+    - idEntidad: String (opcional)
+    - recursoAccedido: String (opcional)
+    - datosAnteriores: JSON
+    - datosNuevos: JSON
+    - fecha: DateTime
+}
+
+class ErrorSistema {
+    - idError: Long
+    - servicio: String
+    - codigo: String
+    - mensaje: String
+    - detalle: String
+    - fecha: DateTime
+}
+
+}
+
+' ====================================================
+' RELACIONES
+' ====================================================
+
+Rol "1" -- "0..*" Usuario : asigna >
+
+Usuario "1" -- "0..1" PerfilCliente
+Usuario "1" -- "0..*" PreferenciaCliente
+
+Categoria "1" -- "0..*" Producto
+
+Producto "1" -- "0..*" ProductoIngrediente
+Ingrediente "1" -- "0..*" ProductoIngrediente
+
+Producto "1" -- "0..1" Inventario
+Producto "1" -- "0..*" MovimientoInventario
+Usuario "1" -- "0..*" MovimientoInventario : registra >
+
+Usuario "1" -- "0..*" Pedido : realiza >
+Pedido "1" *-- "1..*" DetallePedido
+Producto "1" -- "0..*" DetallePedido
+
+Usuario "1" -- "0..*" ConversacionIA
+ConversacionIA "1" *-- "1..*" MensajeIA
+
+AsistenteNutriVida ..> ContextoIA
+AsistenteNutriVida ..> EvaluadorAlimentario : filtra antes de Ollama\ny re-evalúa tarjetas
+EvaluadorAlimentario ..> Producto
+EvaluadorAlimentario ..> Ingrediente
+EvaluadorAlimentario --> EstadoCompatibilidad
+CatalogoAlimentacion ..> PreferenciaCliente : tipos estructurados (FASE 9B-2)
+AsistenteNutriVida ..> CatalogoAlimentacion : solo con consentimiento de perfil
+AsistenteNutriVida ..> ResumenHistorialIA : solo con consentimiento de historial (FASE 9C)
+ResumenHistorialIA ..> Pedido : solo ENTREGADO del propio cliente
+CatalogoAlimentacion ..> EvaluadorAlimentario : restricciones de PERFIL
+AsistenteNutriVida ..> Producto
+AsistenteNutriVida ..> PreferenciaCliente
+AsistenteNutriVida ..> Pedido
+AsistenteNutriVida ..> ConversacionIA
+
+Usuario "0..1" -- "0..*" Auditoria
+Usuario "0..1" -- "0..*" ErrorSistema
+
+MovimientoInventario --> TipoMovimiento
+Pedido --> EstadoPedido
+MensajeIA --> TipoMensaje
+
+enum EstadoConsulta {
+    PENDIENTE
+    RESPONDIDA
+    ERROR
+}
+ConversacionIA --> EstadoConsulta
+note bottom of PerfilCliente
+Los datos históricos cifrados no implican consentimiento.
+FASE 9A: consentimientos independientes (perfil / compras); solo TRUE autoriza.
+Hacia la IA solo viaja objetivoNutricional (nunca condiciones médicas ni alergias).
+FASE 9C: el historial de compras ENTREGADAS solo ajusta la relevancia en el backend
+(ResumenHistorialIA, con autoriza_historial_ia = TRUE); ContextoIA.historialConsumo NO se
+envía a Ollama. historialConversacion: no implementado.
+FASE 9B-1: EvaluadorAlimentario usa SOLO las restricciones declaradas en la consulta
+actual (no las alergias del perfil: FASE 9B-2) y nunca las envía a Ollama.
+Las nuevas declaraciones usan PreferenciaCliente.
+end note
+note bottom of Producto
+Inactivo si falta información comercial.
+No inventar precio ni existencias.
+end note
+note bottom of MovimientoInventario
+AJUSTE establece conteo absoluto >= 0; motivo obligatorio.
+Inicial: anterior NULL; posteriores conservan anterior/nueva.
+ENTRADA/SALIDA: cantidad positiva; resultado no negativo.
+Producto activo completo: configurar y mover.
+Inactivo con inventario: únicamente AJUSTE.
+end note
+@enduml

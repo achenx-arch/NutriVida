@@ -1,0 +1,190 @@
+@startuml Componentes_NutriVida_AI
+
+title Arquitectura de Componentes - NutriVida AI
+
+left to right direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 10
+skinparam componentStyle rectangle
+skinparam ArrowColor #566573
+skinparam ArrowThickness 1
+
+actor Cliente
+actor Empleado
+actor Administrador
+
+cloud "Servicio de IA\nOllama local (llama3.1)" as IA #FFF4DD
+
+node "Servidor de Aplicación NutriVida" {
+
+    package "Capa de Presentación" #EAF3FF {
+
+        component "Frontend Web\nHTML / CSS / JavaScript" as FRONT
+        component "API Gateway /\nControladores REST" as API
+        component "Recursos estáticos\n/images/productos/" as IMG
+    }
+
+    package "Capa de Lógica de Negocio" #EAF8EF {
+
+        component "Servicio de\nAutenticación" as AUTH
+
+        component "Servicio de\nUsuarios y Roles" as USERS
+
+        component "Servicio de\nCatálogo" as CAT
+
+        component "Servicio de\nInventario" as INV
+
+        component "Servicio de\nPedidos" as ORD
+
+        component "Servicio de\nHistorial de Consumo" as HIST
+
+        component "Servicio\nNutriVida AI" as NAI
+
+        component "Evaluador\nAlimentario\n(diccionario cerrado)" as EVAL
+
+        component "Catálogo de\nAlimentación\n(FASE 9B-2)" as ALIM
+    }
+
+    package "Seguridad" #FFE9E9 {
+
+        component "Gestor de Seguridad" as SEC
+        component "Auditoría y Logs" as AUD
+    }
+
+    package "Capa de Acceso a Datos" #F3EEFF {
+
+        component "Repositorio de\nUsuarios" as RUSER
+
+        component "Repositorio de\nProductos" as RPROD
+
+        component "Repositorio de\nInventario" as RINV
+
+        component "Repositorio de\nPedidos" as RORD
+
+        component "Repositorio de\nConversaciones IA" as RAI
+
+        component "Repositorio de\nAuditoría" as RAUD
+    }
+
+    component "Cliente de\nIntegración IA" as IAClient #FFF4DD
+}
+
+database "PostgreSQL\nNutriVida DB" as DB #F3EEFF
+
+node "Variables de Entorno\n.env - fuera del repositorio" as ENV {
+
+    component "JWT_SECRET" as JWT #FFE9E9
+    component "OLLAMA_BASE_URL /\nOLLAMA_MODEL\n(sin API key)" as KEY #FFE9E9
+    component "DB_CREDENTIALS" as CREDS #FFE9E9
+}
+
+' =====================================================
+' USUARIOS
+' =====================================================
+
+Cliente --> FRONT
+Empleado --> FRONT
+Administrador --> FRONT
+
+FRONT --> API : HTTPS / JSON
+
+' =====================================================
+' API A NEGOCIO
+' =====================================================
+
+API --> AUTH
+API --> USERS
+API --> CAT
+API --> INV
+API --> ORD
+API --> HIST
+API --> NAI
+
+' =====================================================
+' SEGURIDAD
+' =====================================================
+
+API --> SEC : valida token / rol
+AUTH --> SEC
+NAI --> SEC : valida entrada
+AUD <-- SEC : eventos seguridad
+
+' =====================================================
+' SERVICIOS A REPOSITORIOS
+' =====================================================
+
+USERS --> RUSER
+CAT --> RPROD
+INV --> RINV
+ORD --> RORD
+
+HIST --> RORD : obtiene pedidos\nentregados
+HIST --> RPROD : obtiene productos
+
+NAI --> RUSER : preferencias
+NAI --> RORD : resumen de compras ENTREGADAS\n(solo con consentimiento de historial, FASE 9C)
+NAI --> RPROD : catálogo disponible
+NAI --> RAI : conversaciones
+
+AUD --> RAUD
+
+' =====================================================
+' IA
+' =====================================================
+
+NAI --> ALIM : datos de «Mi alimentación»\n(solo con consentimiento de perfil)
+ALIM ..> EVAL : restricciones de PERFIL\n(unión con las de la consulta)
+NAI --> EVAL : restricciones de la consulta;\nexcluir antes de Ollama y\nre-evaluar tarjetas
+RPROD ..> EVAL : evalúa elegibles y\nre-evalúa al resolver tarjetas
+NAI --> IAClient : contexto permitido\n(solo productos permitidos)
+IAClient --> IA : HTTP local\nPOST /api/generate
+IA --> IAClient : respuesta / error
+IAClient --> NAI
+
+' =====================================================
+' BD
+' =====================================================
+
+RUSER --> DB
+RPROD --> DB
+RINV --> DB
+RORD --> DB
+RAI --> DB
+RAUD --> DB
+
+' =====================================================
+' VARIABLES ENTORNO
+' =====================================================
+
+JWT ..> AUTH : secreto JWT
+KEY ..> IAClient : configuración IA
+CREDS ..> DB : conexión
+
+note bottom of ENV
+Los secretos nunca se almacenan
+directamente en el código fuente.
+end note
+
+note right of NAI
+Construye contexto usando únicamente:
+• perfil autorizado (lista blanca: objetivo;
+  sin condiciones médicas ni alergias)
+• catálogo disponible
+Consentimiento de compras entregadas: independiente
+(FASE 9A); FASE 9C lo usa solo para ordenar por
+relevancia en el backend (nunca se envía a Ollama).
+Historial de consultas: fuera de alcance.
+end note
+
+note bottom of DB
+PostgreSQL mantiene la persistencia
+de usuarios, productos, inventario,
+pedidos, conversaciones y auditoría.
+end note
+
+FRONT --> IMG : carga imágenes locales\n(solo WebP/PNG/JPG)
+CAT ..> IMG : valida/lista rutas\n(PostgreSQL guarda solo imagen_url)
+@enduml

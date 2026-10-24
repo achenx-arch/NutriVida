@@ -1,0 +1,316 @@
+@startuml Modelo_Relacional_NutriVida_AI
+
+title Modelo Relacional PostgreSQL - NutriVida AI
+
+left to right direction
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 8
+skinparam ArrowColor #455A64
+skinparam ArrowThickness 1
+
+skinparam entity {
+    BackgroundColor #F3EEFF
+    BorderColor #7656A8
+    FontColor #312E46
+}
+
+' =====================================================
+' SEGURIDAD Y USUARIOS
+' =====================================================
+
+package "Usuarios y Seguridad" #EAF3FF {
+
+entity "roles" as roles {
+    * id_rol : BIGSERIAL <<PK>>
+    --
+    nombre : VARCHAR(30) <<UQ>>
+    descripcion : VARCHAR(150)
+}
+
+entity "usuarios" as usuarios {
+    * id_usuario : UUID <<PK>>
+    --
+    id_rol : BIGINT <<FK>>
+    nombre : VARCHAR(80)
+    apellido : VARCHAR(80) <<NULL>>
+    correo : VARCHAR(150) <<UQ>>
+    password_hash : VARCHAR(255)
+    datos_legado : JSONB <<NULL>>
+    estado : BOOLEAN
+    fecha_creacion : TIMESTAMPTZ
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "perfil_cliente" as perfil {
+    * id_perfil : UUID <<PK>>
+    --
+    id_usuario : UUID <<FK,UQ>>
+    telefono : VARCHAR(20)
+    fecha_nacimiento : DATE
+    observaciones : TEXT
+    datos_legado : JSONB <<NULL>>
+    autoriza_contexto_ia : BOOLEAN <<NULL>>
+    autoriza_historial_ia : BOOLEAN <<NULL>>
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "preferencias_cliente" as preferencias {
+    * id_preferencia : BIGSERIAL <<PK>>
+    --
+    id_usuario : UUID <<FK>>
+    tipo : VARCHAR(40)
+    descripcion : TEXT
+    version_cifrado : SMALLINT <<NULL>>
+    activa : BOOLEAN
+    fecha_creacion : TIMESTAMPTZ
+}
+
+}
+
+' =====================================================
+' CATALOGO
+' =====================================================
+
+package "Catálogo NutriVida" #EAF8EF {
+
+entity "categorias" as categorias {
+    * id_categoria : BIGSERIAL <<PK>>
+    --
+    nombre : VARCHAR(80) <<UQ>>
+    descripcion : VARCHAR(250)
+    estado : BOOLEAN
+    fecha_creacion : TIMESTAMPTZ
+}
+
+entity "productos" as productos {
+    * id_producto : UUID <<PK>>
+    --
+    id_categoria : BIGINT <<FK>>
+    nombre : VARCHAR(120)
+    descripcion : TEXT
+    precio : NUMERIC(10,2) <<NULL si inactivo>>
+    stock_minimo : INTEGER <<NULL>>
+    datos_legado : JSONB <<NULL>>
+    valores_nutricionales : TEXT <<NULL>>
+    imagen_url : VARCHAR(500)
+    estado : BOOLEAN
+    fecha_creacion : TIMESTAMPTZ
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "ingredientes" as ingredientes {
+    * id_ingrediente : BIGSERIAL <<PK>>
+    --
+    nombre : VARCHAR(100) <<UQ>>
+    descripcion : VARCHAR(250)
+}
+
+entity "producto_ingrediente" as prod_ing {
+    * id_producto : UUID <<PK,FK>>
+    * id_ingrediente : BIGINT <<PK,FK>>
+    --
+    cantidad_descriptiva : VARCHAR(100)
+}
+
+}
+
+' =====================================================
+' INVENTARIO
+' =====================================================
+
+package "Inventario" #FFF7DC {
+
+entity "inventario" as inventario {
+    * id_inventario : BIGSERIAL <<PK>>
+    --
+    id_producto : UUID <<FK,UQ>>
+    cantidad : INTEGER
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "movimientos_inventario" as movimientos {
+    * id_movimiento : BIGSERIAL <<PK>>
+    --
+    id_producto : UUID <<FK>>
+    id_usuario : UUID <<FK>>
+    tipo : VARCHAR(20)
+    cantidad : INTEGER
+    existencia_anterior : INTEGER <<NULL inicial>>
+    existencia_nueva : INTEGER
+    motivo : VARCHAR(250) <<NOT NULL>>
+    fecha : TIMESTAMPTZ <<NOT NULL>>
+}
+
+}
+
+' =====================================================
+' PEDIDOS
+' =====================================================
+
+package "Pedidos e Historial de Consumo" #EAF8EF {
+
+entity "pedidos" as pedidos {
+    * id_pedido : BIGSERIAL <<PK>>
+    --
+    id_cliente : UUID <<FK>>
+    estado : VARCHAR(30)
+    subtotal : NUMERIC(10,2)
+    total : NUMERIC(10,2)
+    fecha_pedido : TIMESTAMPTZ
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "detalle_pedido" as detalle {
+    * id_detalle : BIGSERIAL <<PK>>
+    --
+    id_pedido : BIGINT <<FK>>
+    id_producto : UUID <<FK>>
+    cantidad : INTEGER
+    precio_unitario : NUMERIC(10,2)
+    subtotal : NUMERIC(10,2)
+}
+
+note bottom of detalle
+El historial de consumo se obtiene
+de pedidos ENTREGADOS +
+detalle_pedido + productos.
+No se duplica información.
+end note
+
+}
+
+' =====================================================
+' INTELIGENCIA ARTIFICIAL
+' =====================================================
+
+package "NutriVida AI" #FFF4DD {
+
+entity "conversaciones_ia" as conversaciones {
+    * id_conversacion : UUID <<PK>>
+    --
+    id_usuario : UUID <<FK>>
+    titulo : VARCHAR(150) <<NULL>>
+    estado : VARCHAR(30)
+    revisada : BOOLEAN <<NULL>>
+    id_interaccion_origen : UUID <<UQ,NULL>>
+    datos_legado : JSONB <<NULL>>
+    fecha_inicio : TIMESTAMPTZ
+    fecha_actualizacion : TIMESTAMPTZ
+}
+
+entity "mensajes_ia" as mensajes {
+    * id_mensaje : BIGSERIAL <<PK>>
+    --
+    id_conversacion : UUID <<FK>>
+    tipo : VARCHAR(20)
+    contenido : TEXT
+    version_cifrado : SMALLINT
+    fecha : TIMESTAMPTZ
+}
+
+}
+
+' =====================================================
+' AUDITORIA
+' =====================================================
+
+package "Auditoría y Errores" #FFE9E9 {
+
+entity "auditoria" as auditoria {
+    * id_auditoria : UUID <<PK>>
+    --
+    id_usuario : UUID <<FK,NULL>>
+    accion : VARCHAR(80)
+    entidad : VARCHAR(80) <<NULL>>
+    recurso_accedido : TEXT <<NULL>>
+    id_entidad : TEXT
+    datos_anteriores : JSONB
+    datos_nuevos : JSONB
+    ip : VARCHAR(45)
+    fecha : TIMESTAMPTZ
+}
+
+entity "errores_sistema" as errores {
+    * id_error : BIGSERIAL <<PK>>
+    --
+    id_usuario : UUID <<FK,NULL>>
+    servicio : VARCHAR(60)
+    codigo : VARCHAR(50)
+    mensaje : VARCHAR(250)
+    detalle : TEXT
+    fecha : TIMESTAMPTZ
+}
+
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+roles ||--o{ usuarios : asigna
+
+usuarios ||--o| perfil : posee
+usuarios ||--o{ preferencias : registra
+
+categorias ||--o{ productos : clasifica
+
+productos ||--o{ prod_ing
+ingredientes ||--o{ prod_ing
+
+productos ||--o| inventario : controla
+productos ||--o{ movimientos : genera
+usuarios ||--o{ movimientos : registra
+
+usuarios ||--o{ pedidos : realiza
+pedidos ||--|{ detalle : contiene
+productos ||--o{ detalle : vendido_en
+
+usuarios ||--o{ conversaciones : inicia
+conversaciones ||--|{ mensajes : contiene
+
+usuarios |o--o{ auditoria : ejecuta
+usuarios |o--o{ errores : relacionado
+
+note bottom of productos
+Precio NULL solo si inactivo; precio informado > 0.
+Stock desconocido: no crear inventario.
+JSONB conserva solo datos históricos.
+Nuevos ingredientes usan producto_ingrediente;
+valores_nutricionales conserva el contrato vigente.
+end note
+
+note bottom of perfil
+Sin consentimiento histórico: NULL (no autorizado).
+FASE 9A: consentimientos independientes. autoriza_contexto_ia = perfil;
+autoriza_historial_ia = compras entregadas (migración 007). NULL/FALSE = no autorizado.
+Campos sensibles antiguos se preservan cifrados en datos_legado.
+Nuevas declaraciones: preferencias_cliente, cifrado versionado.
+end note
+
+note bottom of preferencias
+FASE 9B-2 (sin migración): tipos PREFERENCIA_ALIMENTARIA,
+RESTRICCION_DIETETICA y ALERGENO_DECLARADO; una fila por grupo
+con la lista de códigos en JSON cifrado (version_cifrado = 2).
+Se usan en recomendaciones solo con autoriza_contexto_ia = TRUE.
+end note
+
+entity "infra.schema_migrations" as migraciones {
+    * version : VARCHAR(100) <<PK>>
+    --
+    checksum : CHAR(64)
+    aplicada_en : TIMESTAMPTZ
+}
+note bottom of migraciones
+Tabla técnica, fuera de las 16 tablas de negocio.
+Fechas históricas desconocidas permanecen NULL.
+end note
+note bottom of movimientos
+ENTRADA/SALIDA: cantidad > 0, anterior conocida.
+AJUSTE: cantidad = nueva existencia >= 0.
+Anterior NULL solo en AJUSTE de configuración inicial.
+Anterior/nueva no negativas; motivo obligatorio.
+Inventario + movimiento + auditoría son atómicos.
+end note
+@enduml
