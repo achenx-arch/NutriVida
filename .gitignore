@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno reales (NUNCA subir esto - contiene la API key)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sql.gz
+*.dump
+
+# Base de datos local (persistencia en archivo JSON)
+data/db.json
+
+# Logs
+npm-debug.log*
+*.log
+
+# Sistema operativo / editor
+.DS_Store
+.vscode/
+
+# Respaldos privados y resultados locales
+data/backups/
+
+# Evidencias locales: pueden contener usuarios, salud, respuestas y configuracion privada
+docs/evidencias/
+# Configuracion privada de proveedores (el adaptador de codigo si se versiona)
+.ollama/
+ollama.local.*
+*.local.json
